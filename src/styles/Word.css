@@ -1,0 +1,12 @@
+/* CSS for the word component */
+.wordComponent {
+    position: absolute;
+    top: 10px; /* Adjust as needed for the desired vertical position */
+    left: 10px; /* Adjust as needed for the desired horizontal position */
+    z-index: 1; /* Higher z-index to stack it above the canvasContainer */
+    background-color: white; /* Optional: Adding a background color */
+    padding: 8px; /* Optional: Adding padding for better readability */
+    border-radius: 4px; /* Optional: Adding border-radius */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Optional: Adding a shadow */
+  }
+  

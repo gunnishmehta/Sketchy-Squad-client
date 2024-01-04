@@ -1,0 +1,57 @@
+/* Style for the outer Chat container */
+.Chat {
+  position: absolute;
+  top: 20px; /* Adjust top position as needed */
+  right: 20px; /* Adjust right position as needed */
+  width: 300px; /* Adjust width as needed */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Optional: Set a background color */
+}
+
+/* Style for the input container */
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Style for the input field */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for the send button */
+.sendButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: #0056b3;
+}
+
+/* Style for the message display */
+h1 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Style for the received message */
+.messageReceived {
+  background-color: #f3f3f3;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
