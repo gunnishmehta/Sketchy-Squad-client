@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import '../styles/Room.css'
 import Canvas from '../components/Canvas'
 import Chat from '../components/Chat'
@@ -6,16 +5,6 @@ import Timer from '../components/Timer';
 import Word from '../components/Word';
 
 function Room() {
-
-  const [wordReset, setWordReset] = useState(false);
-
-  const handleTimerEnd = ()=>{
-    setWordReset(true);
-  }
-
-  const handleWordReset = ()=>{
-    setWordReset(false);
-  }
 
   return (
     <div className="Room">
@@ -27,10 +16,10 @@ function Room() {
           <Chat />
         </div>
         <div className='timerWrapper'>
-          <Timer onTimerEnd={handleTimerEnd}/>
+          <Timer/>
         </div>
         <div className='wordWrapper'>
-          <Word shouldReset={wordReset} onWordReset={handleWordReset}/>
+          <Word/>
         </div>
       </div>
 

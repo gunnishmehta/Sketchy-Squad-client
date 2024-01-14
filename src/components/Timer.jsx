@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import io from 'socket.io-client';
+import { useSocket } from "../context/SocketProvider";
 import '../styles/Timer.css';
 
-const socket = io.connect("http://localhost:3001");
+const Timer = () => {
+  const socket = useSocket();
 
-const Timer = ({onTimerEnd}) => {
   const [seconds, setSeconds] = useState(60);
   const intervalRef = useRef(null);
 
-  useEffect (() => {
+
+  useEffect(() => {
     intervalRef.current = setInterval(() => {
       setSeconds((prevSeconds) => {
         if (prevSeconds === 1) {
           setSeconds(60);
-          onTimerEnd();
-          //reset word          
         }
         return prevSeconds - 1;
       });
@@ -25,11 +24,14 @@ const Timer = ({onTimerEnd}) => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [onTimerEnd]);
+  }, []);
 
-  socket.on("request_data", (data)=>{
-    socket.emit("requested_data", seconds)
-  })
+
+  useEffect(() => {
+    socket.on("joinGame", ({ time }) => {
+      setSeconds(60 - time);
+    })
+  }, [socket])
 
   return (
     <div className="timerContainer">

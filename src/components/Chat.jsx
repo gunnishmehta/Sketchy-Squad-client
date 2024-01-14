@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import { useSocket } from "../context/SocketProvider";
 import '../styles/Chat.css';
-
-const socket = io.connect("http://localhost:3001");
 
 const Chat = () => {
   const [message, setMessage] = useState("");
+  const socket = useSocket();
 
   const sendMessage = () => {
     socket.emit("send_message", { message });
@@ -35,7 +34,6 @@ const Chat = () => {
       <div id='chatContainer'>
           <h1>Messages: </h1>
       </div>
-        
     </div>
   )
 }

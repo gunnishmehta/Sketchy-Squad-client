@@ -1,28 +1,10 @@
-import React, { useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useEffect, useState } from 'react';
+import { useSocket } from "../context/SocketProvider";
 import '../styles/Word.css';
 
-const socket = io.connect("http://localhost:3001");
-
-const Word = ({shouldReset, onWordReset}) => {
-    const wordsArray = [
-        'apple',
-        'banana',
-        'orange',
-        'grape',
-        'pineapple',
-        'watermelon',
-        'strawberry',
-        'kiwi',
-        'blueberry',
-        'mango'
-      ];
-    useEffect(()=>{
-      if(shouldReset){
-        randomWord = randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
-        onWordReset();
-      }
-    })
+const Word = () => {
+  const [randomWord, setRandomWord] = useState('abcd')
+  const socket = useSocket();
 
     useEffect(() => {
       socket.on("receive_mesage", (data) => {
@@ -31,9 +13,15 @@ const Word = ({shouldReset, onWordReset}) => {
           alert("you guessed it!");
         }
       });
-    })
-
-    var randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+      socket.on("joinGame", ({word})=>{
+        setRandomWord(word);
+      })
+      // socket.on("startGame", ({word})=>{
+      //   setRandomWord(word);
+      // })
+    }, [socket])
+    
+    
   return (
     <div className='wordComponent'>
       <h3>{randomWord}</h3>

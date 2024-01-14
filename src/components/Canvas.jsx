@@ -1,17 +1,17 @@
+import { useSocket } from "../context/SocketProvider";
 import { useOnDraw } from './Hooks';
-import io from 'socket.io-client'
 import { useEffect } from 'react';
 import '../styles/Canvas.css';
 
-const socket = io.connect("http://localhost:3001");
-
 const Canvas = ({ width, height }) => {
+
+    const socket = useSocket();
+    console.log(socket);
 
     const {
         setCanvasRef,
         onCanvasMouseDown
     } = useOnDraw(onDraw);
-
 
     useEffect(() => {
         socket.on('recieveCanvasData', (data) => {
@@ -48,7 +48,6 @@ const Canvas = ({ width, height }) => {
         ctx.beginPath();
         ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI);
         ctx.fill();
-
     }
 
     function sendData(prevPoint, point) {
@@ -58,7 +57,6 @@ const Canvas = ({ width, height }) => {
 
     return (
         <div className="canvasContainer">
-
             <canvas id='myCanvas'
                 onMouseDown={onCanvasMouseDown}
                 width={width}
@@ -67,9 +65,7 @@ const Canvas = ({ width, height }) => {
                 style={canvasStyle}
             />
         </div>
-
     );
-
 }
 
 export default Canvas;
