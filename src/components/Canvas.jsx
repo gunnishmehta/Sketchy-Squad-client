@@ -1,12 +1,12 @@
 import { useSocket } from "../context/SocketProvider";
 import { useOnDraw } from './Hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/Canvas.css';
 
 const Canvas = ({ width, height }) => {
 
+    const [isHost, setIsHost] = useState(false);
     const socket = useSocket();
-    console.log(socket);
 
     const {
         setCanvasRef,
@@ -21,11 +21,20 @@ const Canvas = ({ width, height }) => {
             const ctx = canvas.getContext('2d');
             drawLine(prevPoint, point, ctx, '#000000', 5);
         })
+        socket.on("joinGame", ({hostSocketId }) => {
+            if(hostSocketId === socket.id){
+              setIsHost(true);
+            }else{
+              setIsHost(false);
+            }
+          })
     }, [socket]);
 
     function onDraw(ctx, point, prevPoint) {
-        drawLine(prevPoint, point, ctx, '#000000', 5);
-        sendData(prevPoint, point);
+        if(isHost){
+            drawLine(prevPoint, point, ctx, '#000000', 5);
+            sendData(prevPoint, point);
+        }
     }
 
     function drawLine(

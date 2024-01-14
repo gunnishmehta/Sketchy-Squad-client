@@ -4,6 +4,7 @@ import '../styles/Chat.css';
 
 const Chat = () => {
   const [message, setMessage] = useState("");
+  const [isHost, setIsHost] = useState(false);
   const socket = useSocket();
 
   const sendMessage = () => {
@@ -17,12 +18,20 @@ const Chat = () => {
       let container = document.getElementById('chatContainer');
       container.appendChild(recievedMessage);
     });
+    socket.on("joinGame", ({hostSocketId }) => {
+      if(hostSocketId === socket.id){
+        setIsHost(true);
+      }else{
+        setIsHost(false);
+      }
+    })
   }, [socket])
 
   return (
     <div className='Chat'>
       <div className="inputContainer">
         <input
+          disabled={isHost}
           placeholder='message...'
           onChange={(event) => {
             setMessage(event.target.value);
