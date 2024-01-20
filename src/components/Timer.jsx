@@ -11,11 +11,12 @@ const Timer = () => {
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setSeconds((prevSeconds) => {
-        if (prevSeconds === 1) {
+        if (prevSeconds === 0) {
           socket.emit('changeWordReq', seconds =>{
             console.log('changeWordReq');
           });
-          setSeconds(60);
+
+          return 60;
         }
         return prevSeconds - 1;
       });
@@ -26,11 +27,12 @@ const Timer = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, []);
+  }, [socket]);
 
 
   useEffect(() => {
     socket.on("joinGame", ({ time }) => {
+      console.log('timer start');
       setSeconds(60 - time);
     })
   }, [socket])

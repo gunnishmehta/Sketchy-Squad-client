@@ -8,19 +8,33 @@ const Chat = ({currentWord}) => {
   const socket = useSocket();
 
   const sendMessage = () => {
-    socket.emit("send_message", { message });
+    socket.emit("send_message", (message));
     if(message === currentWord){
       alert('you guessed it!');
-      socket.emit("guessedCorrect", )
     }
   }
 
+  const outPutMessage = (message) =>{
+    const div = document.createElement('div');
+    div.classList.add('message');
+
+    const p = document.createElement('p');
+    p.classList.add('meta');
+    p.innerHTML = `<span>${message.username} ${message.time}</span>`;
+    div.appendChild(p);
+
+    const para = document.createElement('p');
+    para.classList.add('text');
+    para.innerText = message.text;
+    div.appendChild(para);
+
+    document.querySelector('.chat-messages').appendChild(div);
+  }
+
   useEffect(() => {
-    socket.on("receive_mesage", (data) => {
-      let recievedMessage = document.createElement('p');
-      recievedMessage.textContent = data.message;
-      let container = document.getElementById('chatContainer');
-      container.appendChild(recievedMessage);
+    socket.on("receive_mesage", (message) => {
+      console.log(message);
+      outPutMessage(message);
     });
     socket.on("joinGame", ({hostSocketId }) => {
       if(hostSocketId === socket.id){
@@ -44,8 +58,7 @@ const Chat = ({currentWord}) => {
           onClick={sendMessage} 
           className="sendButton">Send</button>
       </div>
-      <div id='chatContainer'>
-          <h1>Messages: </h1>
+      <div class='chat-messages'>
       </div>
     </div>
   )

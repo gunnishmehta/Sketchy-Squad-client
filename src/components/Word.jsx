@@ -3,7 +3,7 @@ import { useSocket } from "../context/SocketProvider";
 import '../styles/Word.css';
 
 const Word = ({setCurrentWord}) => {
-  const [randomWord, setRandomWord] = useState('abcd')
+  const [randomWord, setRandomWord] = useState('')
   const socket = useSocket();
 
     useEffect(() => {
