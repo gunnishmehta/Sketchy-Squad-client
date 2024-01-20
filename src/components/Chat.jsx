@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useSocket } from "../context/SocketProvider";
 import '../styles/Chat.css';
 
-const Chat = () => {
+const Chat = ({currentWord}) => {
   const [message, setMessage] = useState("");
   const [isHost, setIsHost] = useState(false);
   const socket = useSocket();
 
   const sendMessage = () => {
     socket.emit("send_message", { message });
+    if(message === currentWord){
+      alert('you guessed it!');
+      socket.emit("guessedCorrect", )
+    }
   }
 
   useEffect(() => {

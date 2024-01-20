@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSocket } from "../context/SocketProvider";
 import '../styles/Word.css';
 
-const Word = () => {
+const Word = ({setCurrentWord}) => {
   const [randomWord, setRandomWord] = useState('abcd')
   const socket = useSocket();
 
@@ -15,10 +15,12 @@ const Word = () => {
       });
       socket.on("joinGame", ({word})=>{
         setRandomWord(word);
+        setCurrentWord(word);
       })
-      // socket.on("startGame", ({word})=>{
-      //   setRandomWord(word);
-      // })
+      socket.on("changeWordRes", (word)=>{
+        setRandomWord(word);
+        setCurrentWord(word);
+      })
     }, [socket])
     
     

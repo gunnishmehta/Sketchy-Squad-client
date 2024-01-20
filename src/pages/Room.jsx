@@ -3,8 +3,10 @@ import Canvas from '../components/Canvas'
 import Chat from '../components/Chat'
 import Timer from '../components/Timer';
 import Word from '../components/Word';
+import { useState } from 'react';
 
 function Room() {
+  const [currentWord, setCurrentWord] = useState('');
 
   return (
     <div className="Room">
@@ -13,13 +15,13 @@ function Room() {
           <Canvas width={1000} height={500} />
         </div>
         <div className='chatWrapper'>
-          <Chat />
+          <Chat currentWord = {currentWord}/>
         </div>
         <div className='timerWrapper'>
           <Timer/>
         </div>
         <div className='wordWrapper'>
-          <Word/>
+          <Word setCurrentWord = {setCurrentWord}/>
         </div>
       </div>
 

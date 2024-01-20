@@ -44,7 +44,6 @@ const Canvas = ({ width, height }) => {
         color,
         width
     ) {
-        console.log(start);
         start = start ?? end;
         ctx.beginPath();
         ctx.lineWidth = width;

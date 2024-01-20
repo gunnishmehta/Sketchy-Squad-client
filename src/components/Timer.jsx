@@ -8,11 +8,13 @@ const Timer = () => {
   const [seconds, setSeconds] = useState(60);
   const intervalRef = useRef(null);
 
-
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setSeconds((prevSeconds) => {
         if (prevSeconds === 1) {
+          socket.emit('changeWordReq', seconds =>{
+            console.log('changeWordReq');
+          });
           setSeconds(60);
         }
         return prevSeconds - 1;

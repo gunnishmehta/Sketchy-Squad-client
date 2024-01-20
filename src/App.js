@@ -3,6 +3,8 @@ import {Route, BrowserRouter as Router, Routes} from 'react-router-dom'
 import Room from './pages/Room';
 import Lobby from './pages/Lobby';
 
+export const server = "http://localhost:3001"
+
 function App() {
 
   return (
