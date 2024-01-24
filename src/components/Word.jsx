@@ -4,6 +4,7 @@ import '../styles/Word.css';
 
 const Word = ({setCurrentWord}) => {
   const [randomWord, setRandomWord] = useState('')
+  const [isHost, setIsHost] = useState(false);
   const socket = useSocket();
 
     useEffect(() => {
@@ -13,12 +14,20 @@ const Word = ({setCurrentWord}) => {
           alert("you guessed it!");
         }
       });
-      socket.on("joinGame", ({word})=>{
-        setRandomWord(word);
+      socket.on("joinGame", ({word, hostSocketId})=>{
+        if(hostSocketId === socket.id){
+          setRandomWord(word);
+        }else{
+          setRandomWord(`length of the fruit is ${word.length}`);
+        }
         setCurrentWord(word);
       })
-      socket.on("changeWordRes", (word)=>{
-        setRandomWord(word);
+      socket.on("changeWordRes", ({word, hostSocketId})=>{
+        if(hostSocketId === socket.id){
+          setRandomWord(word);
+        }else{
+          setRandomWord(`length of the word is ${word.length}`);
+        }
         setCurrentWord(word);
       })
     }, [socket])
