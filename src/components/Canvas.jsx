@@ -1,4 +1,4 @@
-import { useSocket } from "../context/SocketProvider";
+import { socket } from '../service/SocketProvider'
 import { useOnDraw } from './Hooks';
 import { useEffect, useState } from 'react';
 import '../styles/Canvas.css';
@@ -6,7 +6,6 @@ import '../styles/Canvas.css';
 const Canvas = ({ width, height }) => {
 
     const [isHost, setIsHost] = useState(false);
-    const socket = useSocket();
 
     const {
         setCanvasRef,
@@ -21,17 +20,32 @@ const Canvas = ({ width, height }) => {
             const ctx = canvas.getContext('2d');
             drawLine(prevPoint, point, ctx, '#000000', 5);
         })
-        socket.on("joinGame", ({hostSocketId }) => {
-            if(hostSocketId === socket.id){
-              setIsHost(true);
-            }else{
-              setIsHost(false);
+        socket.on("joinGame", ({ hostSocketId }) => {
+            if (hostSocketId === socket.id) {
+                setIsHost(true);
+            } else {
+                setIsHost(false);
             }
-          })
+        })
+        socket.on("changeWordRes", ({ hostSocketId }) => {
+            console.log(hostSocketId);
+            if (hostSocketId === socket.id) {
+                setIsHost(true);
+                alert('you are the host now');
+            } else {
+                setIsHost(false);
+            }
+            eraseEverything();
+        })
     }, [socket]);
 
+    function eraseEverything() {
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
     function onDraw(ctx, point, prevPoint) {
-        if(isHost){
+        if (isHost) {
             drawLine(prevPoint, point, ctx, '#000000', 5);
             sendData(prevPoint, point);
         }

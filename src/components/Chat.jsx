@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSocket } from "../context/SocketProvider";
+import {socket} from '../service/SocketProvider'
 import '../styles/Chat.css';
 
 const Chat = ({currentWord}) => {
   const [message, setMessage] = useState("");
   const [isHost, setIsHost] = useState(false);
-  const socket = useSocket();
 
   const sendMessage = () => {
     socket.emit("send_message", (message));
@@ -37,6 +36,14 @@ const Chat = ({currentWord}) => {
       outPutMessage(message);
     });
     socket.on("joinGame", ({hostSocketId }) => {
+      if(hostSocketId === socket.id){
+        setIsHost(true);
+      }else{
+        setIsHost(false);
+      }
+    })
+    socket.on("changeWordRes", ({hostSocketId})=>{
+      console.log(hostSocketId);
       if(hostSocketId === socket.id){
         setIsHost(true);
       }else{

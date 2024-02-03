@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSocket } from "../context/SocketProvider";
+import {socket} from '../service/SocketProvider'
 import '../styles/Word.css';
 
 const Word = ({setCurrentWord}) => {
-  const [randomWord, setRandomWord] = useState('')
-  const [isHost, setIsHost] = useState(false);
-  const socket = useSocket();
+  const [randomWord, setRandomWord] = useState('');
 
     useEffect(() => {
       socket.on("receive_mesage", (data) => {
@@ -14,6 +12,7 @@ const Word = ({setCurrentWord}) => {
           alert("you guessed it!");
         }
       });
+      
       socket.on("joinGame", ({word, hostSocketId})=>{
         if(hostSocketId === socket.id){
           setRandomWord(word);
@@ -22,6 +21,7 @@ const Word = ({setCurrentWord}) => {
         }
         setCurrentWord(word);
       })
+
       socket.on("changeWordRes", ({word, hostSocketId})=>{
         if(hostSocketId === socket.id){
           setRandomWord(word);

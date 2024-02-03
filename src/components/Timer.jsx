@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSocket } from "../context/SocketProvider";
+import {socket} from '../service/SocketProvider'
 import '../styles/Timer.css';
 
 const Timer = () => {
-  const socket = useSocket();
-
   const [seconds, setSeconds] = useState(60);
   const intervalRef = useRef(null);
 
