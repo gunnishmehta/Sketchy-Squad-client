@@ -6,13 +6,6 @@ const Word = ({setCurrentWord}) => {
   const [randomWord, setRandomWord] = useState('');
 
     useEffect(() => {
-      socket.on("receive_mesage", (data) => {
-        let recievedMessage = data.message;
-        if(recievedMessage === randomWord){
-          alert("you guessed it!");
-        }
-      });
-      
       socket.on("joinGame", ({word, hostSocketId})=>{
         if(hostSocketId === socket.id){
           setRandomWord(word);
@@ -21,7 +14,7 @@ const Word = ({setCurrentWord}) => {
         }
         setCurrentWord(word);
       })
-
+      
       socket.on("changeWordRes", ({word, hostSocketId})=>{
         if(hostSocketId === socket.id){
           setRandomWord(word);
@@ -30,6 +23,7 @@ const Word = ({setCurrentWord}) => {
         }
         setCurrentWord(word);
       })
+
     }, [socket])
     
     

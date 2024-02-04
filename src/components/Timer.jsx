@@ -10,9 +10,7 @@ const Timer = () => {
     intervalRef.current = setInterval(() => {
       setSeconds((prevSeconds) => {
         if (prevSeconds === 1) {
-          socket.emit('changeWordReq', seconds =>{
-            console.log('changeWordReq');
-          });
+          socket.emit('changeWordReq', seconds);
 
           return 60;
         }
@@ -30,7 +28,6 @@ const Timer = () => {
 
   useEffect(() => {
     socket.on("joinGame", ({ time }) => {
-      console.log('timer start');
       setSeconds(60 - time);
     })
   }, [socket])

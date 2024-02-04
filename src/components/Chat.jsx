@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import {socket} from '../service/SocketProvider'
 import '../styles/Chat.css';
 
 const Chat = ({currentWord}) => {
   const [message, setMessage] = useState("");
   const [isHost, setIsHost] = useState(false);
+  const [points, setPoints] = useState(0);
 
   const sendMessage = () => {
     socket.emit("send_message", (message));
     if(message === currentWord){
-      alert('you guessed it!');
+      const msg = {
+        username: 'Sketchy Squad',
+        text: 'You guessed it!!',
+        time: moment().format('h:mm a')
+      }
+      outPutMessage(msg);
+      
+      setPoints((prevPoints) => {
+        return prevPoints + 1;
+      });
+      
     }
   }
 
@@ -32,7 +44,6 @@ const Chat = ({currentWord}) => {
 
   useEffect(() => {
     socket.on("receive_mesage", (message) => {
-      console.log(message);
       outPutMessage(message);
     });
     socket.on("joinGame", ({hostSocketId }) => {
@@ -43,9 +54,16 @@ const Chat = ({currentWord}) => {
       }
     })
     socket.on("changeWordRes", ({hostSocketId})=>{
-      console.log(hostSocketId);
       if(hostSocketId === socket.id){
         setIsHost(true);
+
+        const msg = {
+          username: 'Sketchy Squad',
+          text: 'You are the host now',
+          time: moment().format('h:mm a')
+        }
+        outPutMessage(msg);
+        
       }else{
         setIsHost(false);
       }
@@ -54,6 +72,9 @@ const Chat = ({currentWord}) => {
 
   return (
     <div className='Chat'>
+      <div>
+        <p>Points is: {points}</p>
+      </div>
       <div className="inputContainer">
         <input
           disabled={isHost}
@@ -63,7 +84,9 @@ const Chat = ({currentWord}) => {
           }} />
         <button
           onClick={sendMessage} 
-          className="sendButton">Send</button>
+          className="sendButton"
+          disabled={isHost}
+          >Send</button>
       </div>
       <div class='chat-messages'>
       </div>

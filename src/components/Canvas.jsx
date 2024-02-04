@@ -28,10 +28,8 @@ const Canvas = ({ width, height }) => {
             }
         })
         socket.on("changeWordRes", ({ hostSocketId }) => {
-            console.log(hostSocketId);
             if (hostSocketId === socket.id) {
                 setIsHost(true);
-                alert('you are the host now');
             } else {
                 setIsHost(false);
             }
@@ -44,6 +42,7 @@ const Canvas = ({ width, height }) => {
         const context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
+    
     function onDraw(ctx, point, prevPoint) {
         if (isHost) {
             drawLine(prevPoint, point, ctx, '#000000', 5);
