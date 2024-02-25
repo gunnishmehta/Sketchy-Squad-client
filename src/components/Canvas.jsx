@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import '../styles/Canvas.css';
 
 const Canvas = ({ width, height }) => {
-
+    console.log(process.env.REACT_APP_API_URL);
+    console.log(socket);
     const [isHost, setIsHost] = useState(false);
 
     const {
