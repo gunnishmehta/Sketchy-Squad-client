@@ -88,7 +88,7 @@ const Chat = ({currentWord}) => {
           disabled={isHost}
           >Send</button>
       </div>
-      <div class='chat-messages'>
+      <div className='chat-messages'>
       </div>
     </div>
   )
