@@ -48,4 +48,5 @@ Start the server
 
 ## Demo
 
-* [Live Demo](https://sketchy-squad-client-gunnish-mehtas-projects.vercel.app/)
+![](https://github.com/gunnishmehta/Sketchy-Squad-client/blob/main/Gif-Demo.gif)
+* [Video](https://github.com/gunnishmehta/Sketchy-Squad-client/blob/main/Video-Demo.mp4)
